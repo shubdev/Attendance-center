@@ -14,7 +14,9 @@ class AuthService {
         if (!newUser) throw new AppError(500, "Registration Failed.");
 
         const accessToken = generateAccessToken(newUser._id);
-        return accessToken;
+        const userObj = newUser.toObject();
+        delete userObj.password;
+        return { accessToken, user: userObj };
     }
 
     async login(userData) {
@@ -31,7 +33,9 @@ class AuthService {
         if (!isMatch) throw new AppError(400, "Invalid email or password");
 
         const accessToken = generateAccessToken(user._id);
-        return accessToken;
+        const userObj = user.toObject();
+        delete userObj.password;
+        return { accessToken, user: userObj };
     }
 
     async getUser(userId) {

@@ -5,22 +5,22 @@ class AuthController {
     constructor() {
         this.cookieOptions = {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+            secure: true,
+            sameSite: "none",
             maxAge: 60 * 60 * 1000 // 1 hour
         };
     }
 
     register = asyncHandler(async (req, res) => {
-        let accessToken = await authService.register(req.body);
+        let { accessToken, user } = await authService.register(req.body);
         res.cookie("token", accessToken, this.cookieOptions);
-        res.success(201, "Registered Successfully.");
+        res.success(201, "Registered Successfully.", { accessToken, user });
     });
 
     login = asyncHandler(async (req, res) => {
-        let accessToken = await authService.login(req.body);
+        let { accessToken, user } = await authService.login(req.body);
         res.cookie("token", accessToken, this.cookieOptions);
-        res.success(200, "LoggedIn Successfully.");
+        res.success(200, "LoggedIn Successfully.", { accessToken, user });
     });
 
     getUser = asyncHandler(async (req, res) => {

@@ -19,7 +19,10 @@ export default function useAuth() {
         try {
             const result = await register(data).unwrap();
             toast.success(result?.message);
-            navigate("/")
+            if (result?.data?.user) {
+                dispatch(setUser(result.data.user));
+            }
+            navigate("/");
         } catch (error) {
             console.log(error);
             toast.error(error?.data?.message);
@@ -31,7 +34,10 @@ export default function useAuth() {
         try {
             const result = await login(data).unwrap();
             toast.success(result?.message);
-            navigate("/")
+            if (result?.data?.user) {
+                dispatch(setUser(result.data.user));
+            }
+            navigate("/");
         } catch (error) {
             console.log(error);
             toast.error(error?.data?.message);
