@@ -40,7 +40,9 @@ const allowedOrigin = CLIENT_URL.endsWith("/") ? CLIENT_URL.slice(0, -1) : CLIEN
 
 app.use(
   cors({
-    origin: allowedOrigin, // Allow client connection
+    origin: function (origin, callback) {
+      callback(null, origin || true);
+    },
     credentials: true,
   })
 );
