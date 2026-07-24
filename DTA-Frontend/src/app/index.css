@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Custom Scrollbar for a premium look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300/50 dark:bg-slate-700/50 rounded-full hover:bg-slate-400/80 dark:hover:bg-slate-600/80 transition-colors;
+}
+
+/* Glassmorphism utility card - Enhanced for Premium Look */
+.glass-card {
+  @apply bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-white/50 dark:border-slate-700/50 shadow-2xl shadow-slate-200/50 dark:shadow-black/50 rounded-2xl;
+}
+
+/* Micro-animations */
+.hover-lift {
+  @apply transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-sky-500/20;
+}
+
+.glow-btn {
+  @apply transition-all duration-300 active:scale-95 shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 hover:opacity-90;
+}
+
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-sky-600 to-blue-600 dark:from-sky-400 dark:to-blue-400;
+}
+
+.premium-gradient-bg {
+  @apply bg-gradient-to-br from-sky-600 via-blue-500 to-indigo-500;
+}
+
+.subtle-ring {
+  @apply focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 outline-none transition-all duration-200;
+}
+
+/* Custom Backgrounds for Auth */
+.bg-grid-light {
+  background-color: #f8fafc;
+  background-image: 
+    radial-gradient(circle at 20px 20px, rgba(0,0,0,0.15) 1.5px, transparent 1.5px),
+    linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 40px 40px, 10px 10px, 10px 10px;
+}
+
+.bg-grid-dark {
+  background-color: #020617;
+  background-image: 
+    linear-gradient(to right, rgba(255,255,255,0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.07) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+.bg-grid-dark-vignette {
+  background: radial-gradient(ellipse at center, transparent 20%, #020617 90%);
+}
+
+/* Custom Noise Textures for Dashboard */
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
