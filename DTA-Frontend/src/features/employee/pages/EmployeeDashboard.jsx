@@ -29,8 +29,17 @@ function EmployeeDashboard() {
   };
 
 
-  const todayStr = dayjs().format("YYYY-MM-DD");
-  const todayLog = logsRes?.data?.find((log) => log.date === todayStr);
+  const logs = logsRes?.data || [];
+  const latestLog = [...logs].sort((a, b) => new Date(b.punchIn) - new Date(a.punchIn))[0];
+  
+  let todayLog = null;
+  if (latestLog) {
+    const hoursSincePunchIn = dayjs().diff(dayjs(latestLog.punchIn), 'hours');
+    // If the latest punch was within the last 16 hours, consider it the current active shift
+    if (hoursSincePunchIn < 16) {
+      todayLog = latestLog;
+    }
+  }
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
