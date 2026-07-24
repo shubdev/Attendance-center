@@ -7,10 +7,14 @@ import { GEOFENCING_LAT, GEOFENCING_LON, GEOFENCING_RADIUS } from "../config/env
 class AttendanceService {
 
   getLocalDateString(dateObj = new Date()) {
-    const year = dateObj.getFullYear();
-    const month = String(dateObj.getMonth() + 1).padStart(2, "0");
-    const day = String(dateObj.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
+    // Force Asia/Kolkata timezone for date consistency between server and client
+    const formatter = new Intl.DateTimeFormat('en-CA', { 
+      timeZone: 'Asia/Kolkata', 
+      year: 'numeric', 
+      month: '2-digit', 
+      day: '2-digit' 
+    });
+    return formatter.format(dateObj);
   }
 
 
