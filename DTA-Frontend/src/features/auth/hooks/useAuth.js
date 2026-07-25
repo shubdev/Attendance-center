@@ -19,6 +19,9 @@ export default function useAuth() {
         try {
             const result = await register(data).unwrap();
             toast.success(result?.message);
+            if (result?.data?.accessToken) {
+                localStorage.setItem("token", result.data.accessToken);
+            }
             if (result?.data?.user) {
                 dispatch(setUser(result.data.user));
             }
@@ -34,6 +37,9 @@ export default function useAuth() {
         try {
             const result = await login(data).unwrap();
             toast.success(result?.message);
+            if (result?.data?.accessToken) {
+                localStorage.setItem("token", result.data.accessToken);
+            }
             if (result?.data?.user) {
                 dispatch(setUser(result.data.user));
             }
@@ -52,11 +58,10 @@ export default function useAuth() {
     const handleLogout = async () => {
         try {
             await logout().unwrap();
-            dispatch(setUser(null));
-            toast.success("Logged out successfully");
-            navigate("/login");
         } catch (error) {
             console.log(error);
+        } finally {
+            localStorage.removeItem("token");
             dispatch(setUser(null));
             toast.success("Logged out successfully");
             navigate("/login");

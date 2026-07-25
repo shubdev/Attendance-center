@@ -2,24 +2,27 @@ import authService from "../services/auth.service.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 class AuthController {
-    constructor() {
-        this.cookieOptions = {
+    getCookieOptions(req) {
+        const origin = req?.headers?.origin || "";
+        const isLocal = origin.includes("localhost") || origin.includes("127.0.0.1") || req?.hostname === "localhost" || req?.hostname === "127.0.0.1";
+
+        return {
             httpOnly: true,
-            secure: true,
-            sameSite: "none",
+            secure: !isLocal,
+            sameSite: isLocal ? "lax" : "none",
             maxAge: 60 * 60 * 1000 // 1 hour
         };
     }
 
     register = asyncHandler(async (req, res) => {
         let { accessToken, user } = await authService.register(req.body);
-        res.cookie("token", accessToken, this.cookieOptions);
+        res.cookie("token", accessToken, this.getCookieOptions(req));
         res.success(201, "Registered Successfully.", { accessToken, user });
     });
 
     login = asyncHandler(async (req, res) => {
         let { accessToken, user } = await authService.login(req.body);
-        res.cookie("token", accessToken, this.cookieOptions);
+        res.cookie("token", accessToken, this.getCookieOptions(req));
         res.success(200, "LoggedIn Successfully.", { accessToken, user });
     });
 
@@ -35,7 +38,7 @@ class AuthController {
 
         await authService.logout(userId);
 
-        res.clearCookie("token", this.cookieOptions);
+        res.clearCookie("token", this.getCookieOptions(req));
 
         res.success(200, "Logged Out Successfully.");
     });

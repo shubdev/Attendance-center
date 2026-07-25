@@ -17,12 +17,8 @@ const parseCookies = (cookieHeader) => {
 export const socketAuthMiddleware = async (socket, next) => {
   try {
     const rawCookies = socket.request.headers.cookie;
-    if (!rawCookies) {
-      return next(new Error("Authentication error: No cookies found"));
-    }
-
     const parsedCookies = parseCookies(rawCookies);
-    const token = parsedCookies.token;
+    const token = socket.handshake?.auth?.token || socket.handshake?.headers?.authorization?.split(" ")[1] || parsedCookies.token;
 
     if (!token) {
       return next(new Error("Authentication error: Token missing"));

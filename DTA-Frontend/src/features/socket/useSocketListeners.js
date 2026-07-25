@@ -18,6 +18,10 @@ export function useSocketListeners() {
     }
 
     if (!socket.connected) {
+      const token = localStorage.getItem("token");
+      if (token) {
+        socket.auth = { token };
+      }
       socket.connect();
     }
 
