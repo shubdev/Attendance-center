@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const backendUrl = import.meta.env.VITE_BASE_URI && import.meta.env.VITE_BASE_URI.includes('localhost') 
+export const backendUrl = import.meta.env.VITE_BASE_URI && import.meta.env.VITE_BASE_URI.includes('localhost') 
   ? 'http://localhost:3000' 
   : (import.meta.env.VITE_BASE_URI || "https://attendance-management-system-7evz.onrender.com");
 

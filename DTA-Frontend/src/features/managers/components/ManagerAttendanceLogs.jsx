@@ -1,3 +1,4 @@
+import { backendUrl } from "../../../store/apiSlice.js";
 import { useState } from "react";
 import dayjs from "dayjs";
 import { FaMapMarkerAlt } from "react-icons/fa";
@@ -88,7 +89,7 @@ function AdminAttendanceLogs() {
                   <td className="py-4 px-5">
                     <div className="w-13 h-13 rounded-full overflow-hidden border-2 border-white/50 bg-white/20 shadow-lg p-0.5">
                       <img
-                        src={`https://dta-backend-4i1g.onrender.com${log.selfieUrl}`}
+                        src={`${backendUrl}${log.selfieUrl}`}
                         alt="Selfie"
                         className="w-full h-full rounded-full object-cover hover:scale-125 transition-transform duration-500 cursor-pointer"
                         onClick={() => setSelectedLog(log)}
@@ -161,7 +162,7 @@ function AdminAttendanceLogs() {
               {/* Image Column */}
               <div className="rounded-3xl overflow-hidden aspect-square border-2 border-white/40 bg-white/10 shadow-2xl relative group">
                 <img
-                  src={`https://dta-backend-4i1g.onrender.com${selectedLog.selfieUrl}`}
+                  src={`${backendUrl}${selectedLog.selfieUrl}`}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   alt="Captured Selfie"
                   onError={(e) => {
